@@ -19,6 +19,20 @@
 #define POWER_BUTTON          0x20DF10EF
 #define MUTE_BUTTON           0x20DF906F
 
+#define SET_ID_0                0x00
+#define SET_ID_1                0x00
+#define SPACE                   0x20
+#define CR                      0x0D
+#define K_COMMAND_1             0x6B
+#define F_VOL_COMMAND_2         0x66
+#define F_QUERY                 0x66
+
+#define SIZE_RX_BUFFER          250
+#define WDG_FOR_RESP            500
+
+byte RX_BUFFER[SIZE_RX_BUFFER];
+byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, F_QUERY, F_QUERY, CR };
+
 // Globals
 IRrecv receiver(RECEIVER_PIN);  // create a receiver object of the IRrecv class
 decode_results results;         // create a results object of the decode_results class
@@ -43,6 +57,46 @@ void loop()
   handleButtonClicks();
 }
 
+int readFromSerialBuffer()
+{
+  // Locals 
+  int incomingByte = 0; 
+  int totalBytes = 0;
+  unsigned long startTime = millis();
+
+  // Spin for up to one second 
+  while((totalBytes < SIZE_RX_BUFFER) && (millis() - startTime < WDG_FOR_RESP))
+  {
+    // Pull off bytes from hardware 
+    if (Serial.available() > 0) 
+    {
+      // Read the bytes 
+      incomingByte = Serial.read();
+  
+      // Insert to the buffer 
+      RX_BUFFER[totalBytes] = (byte)incomingByte;
+  
+      // Increment the total bytes
+      totalBytes++;
+    }
+  }
+
+  // Bounce back the result 
+  return totalBytes;
+}
+
+void handleVOLUME_UP()
+{
+  // Locals 
+  int respLength = 0;
+  
+  // First we need to get the current volume 
+  Serial.write(GET_VOLUME_REQ, sizeof(GET_VOLUME_REQ));
+
+  // Get the response 
+  responseLength = readSerialBuffer();
+}
+
 void handleButtonClicks()
 {
   // Delay for a bit
@@ -62,7 +116,8 @@ void handleButtonClicks()
     switch (results.value) 
     { 
       case VOLUME_UP: 
-        Serial.println("VOLUME_UP"); 
+        // Serial.println("VOLUME_UP"); 
+        handleVOLUME_UP();
         break;
       case VOLUME_DOWN:
         Serial.println("VOLUME_DOWN");
