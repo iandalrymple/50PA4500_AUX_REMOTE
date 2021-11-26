@@ -1,0 +1,2 @@
+# 50PA4500_AUX_REMOTE
+ Remote control for LG TV (50PA4500)
