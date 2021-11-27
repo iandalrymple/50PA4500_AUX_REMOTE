@@ -33,7 +33,7 @@ namespace VS_50PA4500_AUX_REMOTE
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             // Instantiate object on listener 
-            Listener listener = new Listener();
+            listener = new Listener(tbComPort.Text);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)

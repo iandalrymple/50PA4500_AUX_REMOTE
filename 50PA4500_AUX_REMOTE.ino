@@ -40,9 +40,6 @@ IRrecv receiver(IR_RECEIVER_PIN);   // create a receiver object of the IRrecv cl
 decode_results results;             // create a results object of the decode_results class
 unsigned long lastValue = 0;        // variable to store the last pressed key value
 
-SoftwareSerial mySerial(SOFT_SERIAL_RX_PIN, SOFT_SERIAL_RX_PIN, 1);      // RX, TX
-
-
 // Canned set up method 
 void setup() 
 {
@@ -59,6 +56,8 @@ void loop()
 
   // Show the button values 
   // printButtonCodes();
+
+  // Handle the button clicks 
   handleButtonClicks();
 }
 
@@ -121,8 +120,8 @@ void handleButtonClicks()
     switch (results.value) 
     { 
       case VOLUME_UP: 
-        // Serial.println("VOLUME_UP"); 
-        handleVOLUME_UP();
+        Serial.println("VOLUME_UP"); 
+        // handleVOLUME_UP();
         break;
       case VOLUME_DOWN:
         Serial.println("VOLUME_DOWN");

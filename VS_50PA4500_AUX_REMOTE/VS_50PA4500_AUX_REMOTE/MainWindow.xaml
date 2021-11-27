@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VS_50PA4500_AUX_REMOTE"
         mc:Ignorable="d"
-        Title="50PA4500 Remote Emulator" Height="233" Width="286">
-    <Grid x:Name="frmMain" Margin="10,0,23,24">
+        Title="50PA4500 Remote Emulator" Height="257" Width="326">
+    <Grid x:Name="frmMain" Margin="10,0,10,7">
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="322*"/>
             <ColumnDefinition Width="245*"/>
