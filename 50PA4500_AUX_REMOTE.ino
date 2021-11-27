@@ -1,5 +1,6 @@
 // Includes 
 #include <IRremote.h>        
+#include <SoftwareSerial.h>
 
 // Global notes 
 // Code taken from here 
@@ -8,7 +9,7 @@
 // Roku is NEC as is the new little one that came with board 
 
 // Defines 
-#define RECEIVER_PIN          2             // define the IR receiver pin
+#define IR_RECEIVER_PIN       2           
 #define DELAY_BETWEEN_CLICKS  25
 
 #define REPEAT_VALUE          0xFFFFFFFF
@@ -34,9 +35,9 @@ byte RX_BUFFER[SIZE_RX_BUFFER];
 byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, F_QUERY, F_QUERY, CR };
 
 // Globals
-IRrecv receiver(RECEIVER_PIN);  // create a receiver object of the IRrecv class
-decode_results results;         // create a results object of the decode_results class
-unsigned long lastValue = 0;    // variable to store the last pressed key value
+IRrecv receiver(IR_RECEIVER_PIN);   // create a receiver object of the IRrecv class
+decode_results results;             // create a results object of the decode_results class
+unsigned long lastValue = 0;        // variable to store the last pressed key value
 
 // Canned set up method 
 void setup() 
@@ -94,7 +95,7 @@ void handleVOLUME_UP()
   Serial.write(GET_VOLUME_REQ, sizeof(GET_VOLUME_REQ));
 
   // Get the response 
-  responseLength = readSerialBuffer();
+  respLength = readFromSerialBuffer();
 }
 
 void handleButtonClicks()
