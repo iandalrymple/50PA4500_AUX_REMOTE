@@ -1,0 +1,9 @@
+﻿<Application x:Class="VS_50PA4500_AUX_REMOTE.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VS_50PA4500_AUX_REMOTE"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

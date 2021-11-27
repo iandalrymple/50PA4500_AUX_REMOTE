@@ -1,6 +1,5 @@
 // Includes 
 #include <IRremote.h>        
-#include <SoftwareSerial.h>
 
 // Global notes 
 // Code taken from here 

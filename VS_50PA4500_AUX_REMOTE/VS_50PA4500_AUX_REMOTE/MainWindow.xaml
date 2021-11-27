@@ -1,0 +1,20 @@
+﻿<Window x:Class="VS_50PA4500_AUX_REMOTE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VS_50PA4500_AUX_REMOTE"
+        mc:Ignorable="d"
+        Title="50PA4500 Remote Emulator" Height="233" Width="286">
+    <Grid x:Name="frmMain" Margin="10,0,23,24">
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="322*"/>
+            <ColumnDefinition Width="245*"/>
+            <ColumnDefinition Width="233*"/>
+        </Grid.ColumnDefinitions>-->
+        <Button x:Name="btnStart" Content="Start Thread" HorizontalAlignment="Left" Margin="22,20,0,0" VerticalAlignment="Top" Height="53" Width="176" Click="btnStart_Click"/>
+        <Button x:Name="btnStop" Content="Stop Thread" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Height="53" Width="176" Click="btnStop_Click"/>
+        <TextBox x:Name="tbComPort" HorizontalAlignment="Left" Margin="37,163,0,0" Text="ComPort" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <!--<ListBox x:Name="listBox"/>-->
+    </Grid>
+</Window>
