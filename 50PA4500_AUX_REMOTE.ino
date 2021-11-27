@@ -11,6 +11,8 @@
 // Defines 
 #define IR_RECEIVER_PIN       2           
 #define DELAY_BETWEEN_CLICKS  25
+#define SOFT_SERIAL_RX_PIN    2
+#define SOFT_SERIAL_TX_PIN    3
 
 #define REPEAT_VALUE          0xFFFFFFFF
 #define VOLUME_UP             0x20DF40BF
@@ -38,6 +40,9 @@ byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_
 IRrecv receiver(IR_RECEIVER_PIN);   // create a receiver object of the IRrecv class
 decode_results results;             // create a results object of the decode_results class
 unsigned long lastValue = 0;        // variable to store the last pressed key value
+
+SoftwareSerial mySerial(SOFT_SERIAL_RX_PIN, SOFT_SERIAL_RX_PIN, 1);      // RX, TX
+
 
 // Canned set up method 
 void setup() 
