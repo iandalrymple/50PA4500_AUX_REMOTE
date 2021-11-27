@@ -14,7 +14,8 @@
         </Grid.ColumnDefinitions>-->
         <Button x:Name="btnStart" Content="Start Thread" HorizontalAlignment="Left" Margin="22,20,0,0" VerticalAlignment="Top" Height="53" Width="176" Click="btnStart_Click"/>
         <Button x:Name="btnStop" Content="Stop Thread" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Height="53" Width="176" Click="btnStop_Click"/>
-        <TextBox x:Name="tbComPort" HorizontalAlignment="Left" Margin="37,163,0,0" Text="ComPort" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbComPortArduino" HorizontalAlignment="Left" Margin="37,163,0,0" Text="COM6" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbComPortTv" HorizontalAlignment="Left" Margin="37,186,0,0" Text="COM3" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <!--<ListBox x:Name="listBox"/>-->
     </Grid>
 </Window>

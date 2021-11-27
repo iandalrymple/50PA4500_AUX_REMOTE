@@ -23,26 +23,36 @@ namespace VS_50PA4500_AUX_REMOTE
     public partial class MainWindow : Window
     {
         Listener listener;
+        Sender msgSender;
+        SharedMemory sharedMem;
+        InputButton inputButton;
 
         public MainWindow()
         {
             InitializeComponent();
-            listener = null;
+            inputButton = new InputButton();
+            sharedMem = new SharedMemory();
+            listener = new Listener(ref sharedMem);
+            msgSender = new Sender(ref sharedMem, ref inputButton);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             // Instantiate object on listener 
-            listener = new Listener(tbComPort.Text);
+           listener.startListener(tbComPortArduino.Text);
+
+            // Start the sender 
+            msgSender.startSender(tbComPortTv.Text);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             // Stop the thread if it is running
             listener.StopFlag = true;
+            msgSender.StopFlag = true;
             
             // Wait for the thread to be done 
-            while(listener.isThreadRunning())
+            while(listener.isThreadRunning() || msgSender.isThreadRunning())
             {
 
             }

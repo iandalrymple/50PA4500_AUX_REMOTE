@@ -9,7 +9,7 @@
 
 // Defines 
 #define IR_RECEIVER_PIN       2           
-#define DELAY_BETWEEN_CLICKS  25
+#define DELAY_BETWEEN_CLICKS  100
 #define SOFT_SERIAL_RX_PIN    2
 #define SOFT_SERIAL_TX_PIN    3
 
@@ -36,6 +36,13 @@ byte RX_BUFFER[SIZE_RX_BUFFER];
 byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, F_QUERY, F_QUERY, CR };
 
 // Globals
+byte arVOLUME_UP[4]     = {0x20, 0xDF, 0x40, 0xBF};
+byte arVOLUME_DOWN[4]   = {0x20, 0xDF, 0xC0, 0x3F};
+byte arINPUT_BUTTON[4]  = {0x20, 0xDF, 0xD0, 0x2F};
+byte arOK_BUTTON[4]     = {0x20, 0xDF, 0x22, 0xDD};
+byte arPOWER_BUTTON[4]  = {0x20, 0xDF, 0x10, 0xEF};
+byte arMUTE_BUTTON[4]   = {0x20, 0xDF, 0x90, 0x6F};
+
 IRrecv receiver(IR_RECEIVER_PIN);   // create a receiver object of the IRrecv class
 decode_results results;             // create a results object of the decode_results class
 unsigned long lastValue = 0;        // variable to store the last pressed key value
@@ -120,23 +127,23 @@ void handleButtonClicks()
     switch (results.value) 
     { 
       case VOLUME_UP: 
-        Serial.println("VOLUME_UP"); 
+        Serial.write(arVOLUME_UP, 4); 
         // handleVOLUME_UP();
         break;
       case VOLUME_DOWN:
-        Serial.println("VOLUME_DOWN");
+        Serial.write(arVOLUME_DOWN, 4);
         break;
       case INPUT_BUTTON:
-        Serial.println("INPUT_BUTTON");
+        Serial.write(arINPUT_BUTTON, 4);
         break;
       case OK_BUTTON:
-        Serial.println("OK_BUTTON");
+        Serial.write(arOK_BUTTON, 4);
         break;
       case POWER_BUTTON:
-        Serial.println("POWER_BUTTON");
+        Serial.write(arPOWER_BUTTON, 4);
         break;
       case MUTE_BUTTON:
-        Serial.println("MUTE_BUTTON");
+        Serial.write(arMUTE_BUTTON, 4);
         break;
     }
 

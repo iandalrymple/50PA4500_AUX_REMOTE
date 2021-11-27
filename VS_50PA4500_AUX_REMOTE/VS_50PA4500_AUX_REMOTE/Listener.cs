@@ -15,7 +15,18 @@ namespace VS_50PA4500_AUX_REMOTE
         SerialPort sp;
         string comport;
 
-        public Listener(string port)
+        SharedMemory sharedMem;
+
+        public Listener(ref SharedMemory inMem)
+        {
+            listenerThread = null;
+            sp = null;
+            stopFlag = false;
+            comport = "";
+            sharedMem = inMem;
+        }
+
+        public void startListener(string port)
         {
             listenerThread = new Thread(listen);
             listenerThread.Start();
@@ -30,7 +41,7 @@ namespace VS_50PA4500_AUX_REMOTE
             return listenerThread.IsAlive;
         }
 
-        void setUpSerialPort()
+        private void setUpSerialPort()
         {
             // Set up the serial port 
             sp = new SerialPort();
@@ -41,10 +52,9 @@ namespace VS_50PA4500_AUX_REMOTE
         private void listen()
         {
             // Locals 
-            byte[] rxBuffer = new byte[1000];
+            byte[] rxBuffer = new byte[4];
             setUpSerialPort();
             int reuseByteCount = 0;
-            int tempBytesToRead = 0;
 
             // Turn on the serial port 
             if (!sp.IsOpen)
@@ -55,6 +65,8 @@ namespace VS_50PA4500_AUX_REMOTE
             {
                 //  Reset the reuse byte count 
                 reuseByteCount = 0;
+                for (int i = 0; i < 4; i++)
+                    rxBuffer[i] = 0;
 
                 // Read bytes if available
                 while(reuseByteCount < 4)
@@ -62,31 +74,34 @@ namespace VS_50PA4500_AUX_REMOTE
                     //  Read all the bytes out 
                     if (sp.BytesToRead > 0)
                     {
-                        // Temp bytes 
-                        tempBytesToRead = sp.BytesToRead;
+                        // Read out one byte 
+                        sp.Read(rxBuffer, reuseByteCount, 1);
 
-                        // Read in the bytes
-                        sp.Read(rxBuffer, reuseByteCount, sp.BytesToRead);
-                        reuseByteCount += tempBytesToRead;
+                        // Increment count 
+                        reuseByteCount++;
                     }
                 }
 
-
-
                 // Switch on the message type 
-                switch(BitConverter.ToUInt32(rxBuffer, 0))
+                switch(BitConverter.ToUInt32(rxBuffer.Reverse().ToArray(), 0))
                 {
                     case ButtonValues.VOLUME_UP:
+                        sharedMem.insertButtonValue(ButtonValues.VOLUME_UP);
                         break;
                     case ButtonValues.VOLUME_DOWN:
+                        sharedMem.insertButtonValue(ButtonValues.VOLUME_DOWN);
                         break;
                     case ButtonValues.INPUT_BUTTON:
+                        sharedMem.insertButtonValue(ButtonValues.INPUT_BUTTON);
                         break;
                     case ButtonValues.OK_BUTTON:
+                        sharedMem.insertButtonValue(ButtonValues.OK_BUTTON);
                         break;
                     case ButtonValues.POWER_BUTTON:
+                        sharedMem.insertButtonValue(ButtonValues.POWER_BUTTON);
                         break;
                     case ButtonValues.MUTE_BUTTON:
+                        sharedMem.insertButtonValue(ButtonValues.MUTE_BUTTON);
                         break;
                 }     
             }
