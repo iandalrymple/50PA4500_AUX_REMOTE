@@ -21,8 +21,8 @@
 #define POWER_BUTTON          0x20DF10EF
 #define MUTE_BUTTON           0x20DF906F
 
-#define SET_ID_0                0x00
-#define SET_ID_1                0x00
+#define SET_ID_0                0x30
+#define SET_ID_1                0x31
 #define SPACE                   0x20
 #define CR                      0x0D
 #define K_COMMAND_1             0x6B
@@ -33,7 +33,8 @@
 #define WDG_FOR_RESP            500
 
 byte RX_BUFFER[SIZE_RX_BUFFER];
-byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, F_QUERY, F_QUERY, CR };
+// byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, F_QUERY, F_QUERY, CR };
+byte GET_VOLUME_REQ[] = { K_COMMAND_1, F_VOL_COMMAND_2, SPACE, SET_ID_0, SET_ID_1, SPACE, 0x30, 0x62, CR };
 
 // Globals
 byte arVOLUME_UP[4]     = {0x20, 0xDF, 0x40, 0xBF};
@@ -127,8 +128,8 @@ void handleButtonClicks()
     switch (results.value) 
     { 
       case VOLUME_UP: 
-        Serial.write(arVOLUME_UP, 4); 
-        // handleVOLUME_UP();
+        //Serial.write(arVOLUME_UP, 4); 
+        handleVOLUME_UP();
         break;
       case VOLUME_DOWN:
         Serial.write(arVOLUME_DOWN, 4);
